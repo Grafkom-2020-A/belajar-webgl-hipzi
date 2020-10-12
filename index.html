@@ -12,6 +12,18 @@
       Peramban tidak mendukung kanvas HTML5
     </canvas>
     <script type="text/javascript" src="main.js"></script>
+    <script id="vertexShaderSource" type="notjs">
+      attribute vec2 a_Position;
+      void main() {
+        gl_Position = vec4(a_Position, 0.0, 1.0);
+        gl_PointSize = 20.0;
+      }
+    </script>
+    <script id="fragmentShaderSource" type="notjs">
+      void main() {
+        gl_FragColor = vec4(.5, 0.5, 0.5, 1.0); 
+      }
+    </script>
   </body>
   
 </html>
