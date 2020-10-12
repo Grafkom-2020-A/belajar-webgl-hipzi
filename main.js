@@ -10,6 +10,7 @@ function main() {
         -0.5, 0.5,  // Titik A
         -0.5, -0.5, // Titik B
         0.5, -0.5,   // Titik C
+        -0.5, 0.5,  // Titik A
     ];
 
     // Buffer
@@ -46,9 +47,9 @@ function main() {
     gl.clear(gl.COLOR_BUFFER_BIT);
 
     // Buat segitiga step(1)
-    var primitive = gl.LINE_LOOP;
+    var primitive = gl.LINE_STRIP;
     var offset = 0;
-    var count = 3; // Julah vertex yg akan digambar
+    var count = 4; // Julah vertex yg akan digambar
 
     gl.drawArrays(primitive, offset, count);
 }
