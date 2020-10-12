@@ -7,15 +7,17 @@ function main() {
      * A (-0.5, 0.5); B (-0.5, -0.5); C (0.5, -0.5);
      */
     var vertices = [
-        -0.5, 0.5,  // Titik A
-        -0.5, -0.5, // Titik B
-        0.5, -0.5,   // Titik C
-        0.5, 0.5   // Titik D
+        -0.5, 0.5, 0.5, 0.5, 0.5,  // Titik A
+        -0.5, -0.5, 0.5, 0.5, 0.5, // Titik B
+        0.5, -0.5, 0.5, 0.5, 0.5,   // Titik C
+        0.5, -0.5, 0.0, 0.0, 0.1,  // Titik C
+        0.5, 0.5, 0.0, 0.0, 0.1,  // Titik D
+        -0.5, 0.5, 0.0, 0.0, 0.1  // Titik A
     ];
 
     // Buffer
-    var positionBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+    var vertexBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
     gl.bindBuffer(gl.ARRAY_BUFFER, null); //memutus proses buffer
 
@@ -38,18 +40,33 @@ function main() {
     gl.useProgram(shaderProgram);
 
     // Memetakan buffer CPU ke attribute
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    var aPosition = gl.getAttribLocation(shaderProgram, "a_Position"); 
-    gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+    var aPosition = gl.getAttribLocation(shaderProgram, "a_Position");
+    var aColor = gl.getAttribLocation(shaderProgram, "a_Color"); 
+    gl.vertexAttribPointer(
+        aPosition,
+        2, 
+        gl.FLOAT, 
+        false, 5 * Float32Array.BYTES_PER_ELEMENT, 
+        0);
+    gl.vertexAttribPointer(
+        aColor, 
+        3, 
+        gl.FLOAT, 
+        false, 
+        5 * Float32Array.BYTES_PER_ELEMENT, 
+        2 * Float32Array.BYTES_PER_ELEMENT);
     gl.enableVertexAttribArray(aPosition);
+    gl.enableVertexAttribArray(aColor);
 
     gl.clearColor(0.0,0.5,1.0,1.0);
     gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.viewport(100, 0, canvas.height, canvas.height); 
 
     // Buat segitiga step(1)
-    var primitive = gl.TRIANGLE_FAN;
+    var primitive = gl.TRIANGLES;
     var offset = 0;
-    var count = 4; // Julah vertex yg akan digambar
+    var count = 6; // Julah vertex yg akan digambar
 
     gl.drawArrays(primitive, offset, count);
 }
