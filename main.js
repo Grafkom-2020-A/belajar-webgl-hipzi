@@ -9,7 +9,8 @@ function main() {
     var vertices = [
         -0.5, 0.5,  // Titik A
         -0.5, -0.5, // Titik B
-        0.5, -0.5   // Titik C
+        0.5, -0.5,   // Titik C
+        0.5, 0.5   // Titik D
     ];
 
     // Buffer
