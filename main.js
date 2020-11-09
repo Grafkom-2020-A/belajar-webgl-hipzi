@@ -74,10 +74,29 @@ function main() {
     var uDz = gl.getUniformLocation(shaderProgram, 'dz');
     // gl.uniform1f(uDz, dz); // Tidak perlu di dalam loop render, karena dz tidak berubah
 
+    // Element interaktif
+    var freeze = false;
+    function onMouseClick(event) {
+        freeze = !freeze;
+    }
+    document.addEventListener('click', onMouseClick, false);
+
+    function onKeyDown(event) {
+        if (event.keyCode == 32) freeza = true;
+    }
+
+    function onKeyUp(event) {
+        if (event.keyCode == 32) freeza = false;
+    }
+    document.addEventListener('keydown', onKeyDown, false);
+    document.addEventListener('keyup', onKeyUp, false);
+
     function render(){
-        dx += 0.001;
-        dy += 0.001;
-        dz += 0.001;
+        if(!freeze){
+            dx += 0.001;
+            dy += 0.001;
+            dz += 0.001;
+        }
         gl.uniform1f(uDx, dx);
         gl.uniform1f(uDy, dy);
         gl.uniform1f(uDz, dz);
